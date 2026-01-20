@@ -162,7 +162,7 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 - Photorealistic image and video generation
 - Human-level: image classification, speech/handwriting transcription
 - Dramatically improved translation & text-to-speech
-- Autonomous driving deployed in multiple cities
+- Autonomous driving deployed in Phoenix, San Francisco, Los Angeles, and Austin (as of 2025)
 - Superhuman game playing (Go, Chess, Poker)
 
 ::: notes
@@ -181,7 +181,7 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 **Reality (mid-2025):**
 
 - "Tens of billions" in generative AI revenue (overall)
-- Investment  >> Revenue >> Profits
+- AI investment surpasses $100B annually, revenue closer to $10B
 
 ::: notes
 - AGI predictions: Minsky (1967), OpenAI's 2016 pitch, now again in 2023
@@ -193,7 +193,7 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 - AI: "Cognitive automation" = handles only what it's trained for
 - Intelligence: "Cognitive autonomy" = facing the unknown, adapting, learning from it
 
-> "AI is like a cartoon character, while intelligence is like a living being. A cartoon, no matter how realistic, can only act out the scenes it was drawn for"
+> "Think of it this way: AI is like a cartoon character, while intelligence is like a living being. A cartoon, no matter how realistic, can only act out the scenes it was drawn for."
 
 
 
@@ -222,7 +222,7 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 
 ## The long-term promise
 
-From previous edition of this book (written in 2017):
+From the previous edition of this book (written in 2017):
 
 > "AI will be your assistant... help educate your kids... watch over your health... be your interface to an increasingly complex world."
 
