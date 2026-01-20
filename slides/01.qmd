@@ -44,7 +44,7 @@ format:
 |---|---|---|
 | **Goal** | Estimate parameters + uncertainty | Predictions/generalization |
 | **Models** | Theory-driven, causal | Flexible, data-driven |
-| **Sweet spot** | Small n | Large n |
+| **Data regime** | Small n, strong assumptions | Large n, weaker assumptions |
 
 ::: notes
 - **Goal**: Inference cares about parameter values — "What is β? Is it significantly different from 0? What's the 95% CI?" ML doesn't care about parameters (millions of meaningless weights) — only whether predictions are accurate on held-out data.
