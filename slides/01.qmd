@@ -56,7 +56,7 @@ format:
 ## The three ingredients of ML
 
 1. **Input data points** — Images, text, audio, tabular data...
-2. **Examples outputs** — Labels, transcriptions, categories...
+2. **Example outputs** — Labels, transcriptions, categories...
 3. **A way to measure success** — How far off are we?
 
 The third ingredient is crucial: the **feedback signal** drives learning.
@@ -119,14 +119,14 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 ![Optimizer updates weights via backpropagation.](images/deep-learning-in-3-figures-3.png){fig-align="center" height="300"}
 
 - **Backpropagation**: the central algorithm
-- Training loop: repeat until loss is minimized
+- Training loop: repeat to reduce loss
 
 ## What makes deep learning different?
 
 | Property | Why it matters |
 |----------|----------------|
 | **Simplicity** | Automates feature engineering — no hand-crafting |
-| **Scalability** | GPUs + batching = arbitrary dataset sizes |
+| **Scalability** | GPUs + batching enable much larger datasets |
 | **Versatility** | Models are reusable, can do online learning |
 
 ::: notes
@@ -183,10 +183,10 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 
 ## AGI soon?
 
-- AI: 'Cognitive Automation' = handles only what it's trained for
-- Intelligence : 'Cognitive autonomy'= facing the unknown, adapting, learning from it
+- AI: "Cognitive automation" = handles only what it's trained for
+- Intelligence: "Cognitive autonomy" = facing the unknown, adapting, learning from it
 
-> "AI is like a cartoon character, while intelligence is like a living being.  A cartoon, no matter how realistic, can only act out the scenes it was drawn for"
+> "AI is like a cartoon character, while intelligence is like a living being. A cartoon, no matter how realistic, can only act out the scenes it was drawn for"
 
 
 
@@ -219,7 +219,7 @@ From previous edition of this book (written in 2017):
 
 **2025 reality:**
 
-- ChatGPT/Claude agents help write code (and homeowrk!)
+- ChatGPT/Claude agents help write code (and homework!)
 - Waymo is a common sight in my city (Phoenix)
 - AlphaFold transforming biology
 - Terence Tao: AI as "reliable co-author" in mathematics by ~2026
