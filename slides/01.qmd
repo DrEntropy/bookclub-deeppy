@@ -90,6 +90,7 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 > "A multistage information-distillation process"
 
 ::: notes
+- The book is explicit: DL is not modeled on the brain; treat it as math
 - Shallow learning: 1-2 layers, often needed hand-crafted features
 - Neural networks: layers stacked, inspired (loosely!) by biology
 - The brain connection is overhyped — it's really just math
@@ -121,6 +122,10 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 - **Backpropagation**: the central algorithm
 - Training loop: repeat to reduce loss
 
+::: notes
+- Random initialization + repeated updates are what make the loop work
+:::
+
 ## What makes deep learning different?
 
 | Property | Why it matters |
@@ -132,6 +137,7 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 ::: notes
 - Foundation models: train once, use everywhere
 - Transfer learning changed the economics of ML
+- End-to-end DL replaces multistage pipelines that needed hand-crafted features
 :::
 
 ## The age of generative AI
@@ -146,11 +152,13 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 ::: notes
 - Generative AI ideas date back to the 1990s
 - The first edition of this book (2017) had a "Generative AI" chapter!
+- Foundation models learn by reconstructing inputs (next-word, denoising)
+- Scale note: hundreds of billions of params, >1PB data, tens of $M to train
 :::
 
 ## What DL has achieved
 
-- Fluent chatbots & programming assistants (Copilot, Claude code)
+- Fluent chatbots & programming assistants (ChatGPT, Gemini, GitHub Copilot)
 - Photorealistic image and video generation
 - Human-level: image classification, speech/handwriting transcription
 - Dramatically improved translation & text-to-speech
@@ -172,8 +180,7 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 
 **Reality (mid-2025):**
 
-- Tens of billions in revenue! 
-- Openai alone 20B revenue in 2025
+- "Tens of billions" in generative AI revenue (overall)
 - Investment  >> Revenue >> Profits
 
 ::: notes
@@ -192,6 +199,8 @@ The third ingredient is crucial: the **feedback signal** drives learning.
 
 ::: notes
 - This is Chollet's key argument against AGI hype
+- 2013–2015: near-term AGI fear helped motivate OpenAI's founding (2015)
+- OpenAI's 2016 recruiting pitch: AGI by 2020
 - Discussion: Do you agree? Can scaling solve this?
 :::
 
@@ -219,10 +228,7 @@ From previous edition of this book (written in 2017):
 
 **2025 reality:**
 
-- ChatGPT/Claude agents help write code (and homework!)
-- Waymo is a common sight in my city (Phoenix)
-- AlphaFold transforming biology
-- Terence Tao: AI as "reliable co-author" in mathematics by ~2026
+- Long-term outlook is bright, but deployment is still early (internet-1995 analogy)
 
 
 ## Discussion questions
