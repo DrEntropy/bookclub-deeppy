@@ -1,0 +1,338 @@
+---
+title: The mathematical building blocks of neural networks
+---
+
+## Learning objectives
+
+-   Explain what tensors are and their key attributes
+-   Describe common tensor operations (element-wise, broadcasting, dot product)
+-   Trace the gradient descent training loop step by step
+
+## A first look: MNIST
+
+![Sample MNIST handwritten digits.](images/mnist-sample-digits.png){fig-align="center"}
+
+- 60,000 training images, 10,000 test images
+- Each image: 28×28 grayscale pixels
+- Goal: Classify digits 0-9
+
+::: notes
+- Classic "hello world" of deep learning
+- Simple enough to train on a laptop
+- Complex enough to demonstrate real learning
+:::
+
+## The MNIST model in Keras
+
+```python
+model = keras.Sequential([
+    layers.Dense(512, activation="relu"),
+    layers.Dense(10, activation="softmax")
+])
+model.compile(optimizer="rmsprop",
+              loss="sparse_categorical_crossentropy",
+              metrics=["accuracy"])
+model.fit(train_images, train_labels, epochs=5, batch_size=128)
+```
+
+- Two **Dense** layers: fully connected neurons
+- **ReLU**: `max(0, x)` — introduces nonlinearity
+- **Softmax**: outputs probabilities for each class
+
+::: notes
+- We'll understand every piece by end of chapter
+- Dense = every input connected to every output
+- 512 neurons is arbitrary — a hyperparameter to tune
+:::
+
+## What is a tensor?
+
+| Rank | Name | Example |
+|------|------|---------|
+| 0 | Scalar | `12.5` — a single number |
+| 1 | Vector | `[1, 2, 3]` — a 1D array |
+| 2 | Matrix | 2D array (rows × columns) |
+| 3+ | Tensor | 3D, 4D, 5D arrays... |
+
+**Three key attributes:**
+
+1. **Rank** (ndim): Number of axes
+2. **Shape**: Size along each axis, e.g. `(60000, 28, 28)`
+3. **Dtype**: Data type (`float32`, `int64`, etc.)
+
+::: notes
+- In NumPy: `x.ndim`, `x.shape`, `x.dtype`
+- "Tensor" is just the general term for n-dimensional arrays
+- MNIST training data: rank-3 tensor, shape (60000, 28, 28)
+:::
+
+## Real-world data as tensors
+
+| Data type | Shape | Example |
+|-----------|-------|---------|
+| Vector data | `(samples, features)` | Tabular data, embeddings |
+| Timeseries | `(samples, timesteps, features)` | Stock prices, sensor data |
+| Images | `(samples, height, width, channels)` | Photos (3 channels = RGB) |
+| Video | `(samples, frames, height, width, channels)` | Movie clips |
+
+::: notes
+- The first axis is almost always the "samples" or "batch" axis
+- Channels-last is default in TensorFlow/Keras
+- PyTorch uses channels-first: (samples, channels, height, width)
+:::
+
+## Timeseries data tensor
+
+![A timeseries batch as a 3D tensor.](images/timeseries-data-tensor.png){fig-align="center" height="350"}
+
+- Shape: `(samples, timesteps, features)`
+- Example: 250 days of stock data with 3 features each
+
+## Image data tensor
+
+![An image batch as a 4D tensor.](images/image-data-tensor.png){fig-align="center" height="350"}
+
+- Shape: `(samples, height, width, channels)`
+- MNIST: `(60000, 28, 28, 1)` — grayscale, so 1 channel
+
+## Tensor operations: Element-wise
+
+```python
+# Element-wise addition
+z = x + y  # Each element added independently
+
+# ReLU activation
+z = np.maximum(x, 0)  # Applied to each element
+```
+
+- Operations applied **independently** to each element
+- Same shape in, same shape out
+- Examples: addition, subtraction, multiplication, ReLU
+
+::: notes
+- ReLU = Rectified Linear Unit
+- These are "embarrassingly parallel" — perfect for GPUs
+- Element-wise is the simplest tensor operation
+:::
+
+## Tensor operations: Broadcasting
+
+When shapes don't match, the smaller tensor is **broadcast** to fit:
+
+```python
+x = np.array([[1, 2], [3, 4]])  # Shape (2, 2)
+y = np.array([10, 20])          # Shape (2,)
+z = x + y                        # y broadcast to (2, 2)
+# Result: [[11, 22], [13, 24]]
+```
+
+**Rules:**
+
+1. Axes are compared right-to-left
+2. Dimensions must be equal OR one of them is 1
+3. Missing axes are treated as 1
+
+::: notes
+- Broadcasting avoids explicit loops and copies
+- Very efficient — no new memory allocated
+- Common pitfall: broadcasting can hide shape bugs
+:::
+
+## Tensor operations: Dot product
+
+![Matrix dot product computation.](images/matrix-dot-product.png){fig-align="center" height="300"}
+
+- The **core operation** in neural networks
+- Rows of first matrix × columns of second
+- Result shape: `(a, b) @ (b, c) → (a, c)`
+
+::: notes
+- Also called matrix multiplication, matmul, gemm
+- This is what Dense layers do: `output = dot(input, W) + b`
+- GPUs are optimized specifically for this operation
+:::
+
+## Tensor reshaping
+
+```python
+x = np.array([[0, 1], [2, 3], [4, 5]])  # Shape (3, 2)
+x = x.reshape((6,))    # Shape (6,)
+x = x.reshape((2, 3))  # Shape (2, 3)
+```
+
+- Changes tensor shape **without changing data**
+- Total elements must remain the same
+- **Transpose**: special case that swaps axes
+
+::: notes
+- Reshaping is just reinterpreting the same memory
+- Zero-cost operation (no data copying)
+- Common use: flatten images before Dense layers
+:::
+
+## Geometric interpretation
+
+![Dense layer as affine transform with ReLU.](images/dense-transform-relu.png){fig-align="center" height="350"}
+
+- Dense layers = **affine transformations** (rotation + translation)
+- ReLU = "creasing" that introduces nonlinearity
+- Stacking layers = composing transformations
+
+::: notes
+- Without nonlinearity, stacked layers collapse to a single linear transform
+- ReLU "folds" the space, creating piecewise linear boundaries
+- This is why depth matters: more folds = more complex boundaries
+:::
+
+## The paper ball analogy
+
+![Uncrumpling a crumpled paper ball.](images/geometric-uncrumpling.png){fig-align="center" height="350"}
+
+> "A deep network is a mathematical machine for uncrumpling complicated manifolds"
+
+::: notes
+- Imagine your data classes as tangled, crumpled paper
+- The network learns to "uncrumple" it until classes are separable
+- Each layer does part of the uncrumpling
+:::
+
+## The training loop
+
+1. **Draw a batch** of training samples
+2. **Forward pass**: Compute predictions
+3. **Compute loss**: Measure prediction error
+4. **Backward pass**: Calculate gradients
+5. **Update weights**: Move opposite to gradient
+
+Repeat until loss is low enough (or patience runs out).
+
+::: notes
+- "Epoch" = one pass through entire training set
+- "Batch" = subset of samples processed together
+- This loop is the same for almost all neural networks
+:::
+
+## What is a gradient?
+
+- **Derivative**: How output changes when input changes slightly
+- **Gradient**: Vector of partial derivatives (one per input dimension)
+- Points toward **steepest increase** of the function
+
+For loss function L with weights W:
+
+$$\nabla_W L = \left( \frac{\partial L}{\partial w_1}, \frac{\partial L}{\partial w_2}, \ldots \right)$$
+
+::: notes
+- We want to *decrease* loss, so we move *opposite* to gradient
+- "Gradient descent" = repeatedly stepping downhill
+- The gradient tells us both direction AND magnitude of steepest ascent
+:::
+
+## Gradient descent visualized
+
+![Gradient descent on a 2D loss surface.](images/gradient-descent-3d.png){fig-align="center" height="350"}
+
+- Start at random point
+- Compute gradient (slope)
+- Take small step opposite to gradient
+- Repeat
+
+::: notes
+- Learning rate controls step size
+- Too large: overshoot and oscillate
+- Too small: slow convergence
+:::
+
+## Stochastic Gradient Descent (SGD)
+
+**Why "stochastic"?** We use random mini-batches, not full dataset.
+
+| Variant | Key idea |
+|---------|----------|
+| SGD | Update = learning_rate × gradient |
+| Momentum | Accumulate velocity to escape local minima |
+| RMSprop | Adapt learning rate per-parameter |
+| Adam | Combines momentum + RMSprop |
+
+::: notes
+- Mini-batch SGD is the standard in deep learning
+- "Stochastic" = randomness from batch sampling
+- Adam is a good default; RMSprop works well too
+:::
+
+## Local vs global minima
+
+![Local minimum vs global minimum.](images/local-global-minima.png){fig-align="center" height="300"}
+
+- **Local minimum**: Low point in neighborhood
+- **Global minimum**: Lowest point overall
+- In practice: local minima aren't usually a problem in high dimensions
+
+::: notes
+- High-dimensional loss surfaces have many saddle points
+- Momentum helps escape saddle points
+- Most "local minima" in deep learning are nearly as good as global
+:::
+
+## Backpropagation
+
+![Backward pass through computation graph.](images/backprop-computation-graph.png){fig-align="center" height="300"}
+
+- **Chain rule** applied to computation graphs
+- Gradients flow backward from loss to parameters
+- **Automatic differentiation**: frameworks compute this for you
+
+::: notes
+- "Backprop" = efficient algorithm to compute all gradients
+- Key insight: reuse intermediate gradients (dynamic programming)
+- TensorFlow's GradientTape, PyTorch's autograd do this automatically
+:::
+
+## Backprop: The chain rule
+
+For composed functions: $f(g(x))$
+
+$$\frac{d}{dx} f(g(x)) = \frac{df}{dg} \cdot \frac{dg}{dx}$$
+
+- Neural networks are long chains of functions
+- Gradient at any layer = gradient above × local gradient
+- Computed efficiently in one backward pass
+
+::: notes
+- This is calculus 101, but applied at massive scale
+- Modern frameworks trace operations and build the graph automatically
+- The "backward" pass mirrors the structure of the forward pass
+:::
+
+## Looking back at MNIST
+
+```python
+model.fit(train_images, train_labels, epochs=5, batch_size=128)
+```
+
+Now we understand what happens:
+
+1. **Batch of 128** images drawn from training data
+2. **Forward**: Input → Dense(512, relu) → Dense(10, softmax) → Predictions
+3. **Loss**: Compare predictions to labels (cross-entropy)
+4. **Backward**: Compute gradients for all ~400K parameters
+5. **Update**: RMSprop adjusts each weight
+6. **Repeat** ~469 times per epoch (60000 ÷ 128)
+
+::: notes
+- 5 epochs × 469 batches = ~2,345 weight updates
+- Each update uses gradients from 128 samples
+- Final accuracy: ~98% on test set
+:::
+
+## Discussion questions
+
+1. Why do we use mini-batches instead of the full dataset?
+2. What happens if the learning rate is too high? Too low?
+3. Why are GPUs so effective for neural network training?
+
+::: notes
+- Mini-batches: memory limits, faster updates, regularization effect
+- Learning rate: too high = diverge, too low = slow/stuck
+- GPUs: massive parallelism for matrix operations
+:::
