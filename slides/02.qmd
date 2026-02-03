@@ -69,7 +69,7 @@ model.fit(train_images, train_labels, epochs=5, batch_size=128)
 ## Real-world data as tensors
 
 | Data type | Shape | Example |
-|-----------|-------|---------|
+|-----------|-----------|---------|
 | Vector data | `(samples, features)` | Tabular data, embeddings |
 | Timeseries | `(samples, timesteps, features)` | Stock prices, sensor data |
 | Images | `(samples, height, width, channels)` | Photos (3 channels = RGB) |
