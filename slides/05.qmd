@@ -49,6 +49,7 @@ Three main sources:
 - MNIST experiment in the book: adding 784 white noise channels degraded validation accuracy by ~1%
 - The noise channels had no information, but the model found accidental patterns
 - Shuffled-label experiment: model memorized random labels perfectly — zero generalization
+- **NOTEBOOK DEMO**: Switch to notebook cells 10-12. Run the noise channels experiment and show the validation accuracy plot. Ask: "Why can't the model just ignore the noise?"
 :::
 
 ## The manifold hypothesis
@@ -214,6 +215,7 @@ callbacks_list = [
 - There's no formula for the right size — it's empirical
 - The book's heuristic: start with a model that overfits, then shrink/regularize
 - "Occam's razor" — simplest model that fits the data
+- **NOTEBOOK DEMO**: Switch to notebook cells 44-48. Run the IMDB baseline (16-unit) model, then the larger (512-unit) model. Plot both to show how the bigger model overfits much worse. (Pre-run these if short on time.)
 :::
 
 ## Regularization: Weight regularization
@@ -260,6 +262,7 @@ model = keras.Sequential([
 - Like training an ensemble of sub-networks that share weights
 - Dropout is one of the most effective and widely used techniques
 - Only applied during training — `model.evaluate()` and `model.predict()` don't use it
+- **NOTEBOOK DEMO**: Switch to notebook cells 54-55. Run the dropout model on IMDB and plot against the original baseline from the previous demo. The validation curve tightens up — dropout fixes the overfitting.
 :::
 
 ## Discussion questions
