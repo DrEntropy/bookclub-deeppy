@@ -25,12 +25,10 @@ The fundamental tension in machine learning:
 
 ## Underfitting vs overfitting
 
-| Phase | Training loss | Validation loss | What's happening |
-|-------|:---:|:---:|------|
-| **Underfitting** | High | High | Model hasn't learned enough |
-| **Sweet spot** | Low | Low | Good generalization |
-| **Overfitting** | Very low | Rising | Memorizing, not learning |
+![Canonical overfitting behavior.](images/typical-overfitting.png){fig-align="center" height="300"}
 
+- Both curves drop together (underfitting), then diverge (overfitting)
+- The "robust fit" point is where we want to stop
 - This pattern is universal across all model types and datasets
 
 ::: notes
@@ -57,9 +55,10 @@ Three main sources:
 
 - Real-world data lives on low-dimensional **manifolds** within high-dimensional space
 - These manifolds are smooth and continuous — you can morph one sample into another
-- This structure is what makes generalization possible
 
-> Deep learning works because it learns parametric curves that approximate these data manifolds.
+![Manifold interpolation produces valid digits; linear interpolation does not.](images/linear-vs-manifold-interpolation.png){fig-align="center" height="200"}
+
+- Generalization via **interpolation**
 
 ::: notes
 - Example: images of faces form a manifold — you can smoothly transition between faces
@@ -263,24 +262,6 @@ model = keras.Sequential([
 - Like training an ensemble of sub-networks that share weights
 - Dropout is one of the most effective and widely used techniques
 - Only applied during training — `model.evaluate()` and `model.predict()` don't use it
-:::
-
-## The generalization recipe
-
-```{mermaid}
-%%| fig-width: 8
-flowchart TD
-    A[Start: build a model that overfits] --> B[Add regularization / dropout]
-    B --> C[Tune hyperparameters on validation set]
-    C --> D{Validation improving?}
-    D -->|Yes| C
-    D -->|No| E[Evaluate on test set once]
-```
-
-::: notes
-- Step 1 is crucial: if you can't overfit, regularization won't help
-- Iterate between capacity and regularization
-- Only touch the test set at the very end
 :::
 
 ## Discussion questions
