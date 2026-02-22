@@ -107,7 +107,7 @@ Three main sources:
 ## Evaluation pitfalls
 
 - **Data representativeness**: Always shuffle before splitting
-- **Temporal ordering**: For time-series, *never* shuffle — validate on future data only
+- **Temporal ordering**: For time-series,  validate on future data only
 - **Redundancy**: Ensure no overlap between train and validation (e.g., duplicate photos)
 - **Baseline**: Always beat a common-sense baseline before celebrating
 
@@ -124,7 +124,6 @@ Three problems you'll encounter:
 **1. Training loss doesn't decrease**
 
 - Learning rate too high (overshooting) or too low (stalling)
-- Try: lower learning rate, larger batch size
 
 **2. Training works but model doesn't generalize**
 
@@ -133,7 +132,6 @@ Three problems you'll encounter:
 **3. Can't achieve overfitting**
 
 - Model is too small — increase layers or layer sizes
-- It should *always* be possible to overfit
 
 ::: notes
 - Achieving overfitting first is a key milestone — it proves your pipeline works
@@ -175,7 +173,7 @@ Applying **domain knowledge** to create better input representations:
 ## Early stopping
 
 Interrupt training when validation metrics stop improving:
-
+(We will learn this in chapter 7)
 ```python
 callbacks_list = [
     keras.callbacks.EarlyStopping(
